@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <title>dehaze image</title>
+</head>
+<body>
+    <h2> Your dehazed image </h2>
+    <img src="{% static 'images/dehaze.jpg' %}">
+    <p>Click <a download href="{% static 'images/dehazed_img.jpg' %}">here</a> to download image</p>
+</body>
+</html>

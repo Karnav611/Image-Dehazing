@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from . models import User
+import os 
 
 # Create your views here.
 
@@ -9,10 +10,9 @@ def index(request):
 def uploadImage(request):
     print("upload")
     pic = request.FILES['image']
+    temp = pic.name
     user = User(img = pic)
-    pic.name = "hazy_img.jpg"
     user.save()
-
 
     import cv2 
     import numpy as np
@@ -70,7 +70,7 @@ def uploadImage(request):
         return q
 
     # Variables
-    filename = "../media/uploaded/hazy_img.jpg"
+    # filename = "../media/uploaded/hazy_img.jpg"
     noise = 0 # guided filter, eps
     beta = 1 #dehazing strength (scattering coefficient)
 
@@ -84,7 +84,7 @@ def uploadImage(request):
     blur_strength = 15 # Strength of blurring after min filter in depthmap
 
     # Reading the image
-    hazed_img = cv2.imread("D:\\SEM6\\SDP\\SDP_Django\\imagedehazing\\media\\uploaded\\hazy_img.jpg",1)
+    hazed_img = cv2.imread("D:\\SEM6\\SDP\\SDP_Django\\imagedehazing\\media\\uploaded\\" + temp,1)
     # print(type(hazed_img)) 
 
     # Extracting the brightness and saturation values from the image
@@ -150,8 +150,14 @@ def uploadImage(request):
     dehazed_image += atmospheric_light.astype("float")
 
     #cv2.imwrite("../media/hazy_img" + ".jpg", hazed_img)
+    if os.path.isfile('D:\\SEM6\\SDP\\SDP_Django\\imagedehazing\\dehazing\\static\\images\\dehazed_img.jpg')== True:
+        print("exist")
+        os.remove('D:\\SEM6\\SDP\\SDP_Django\\imagedehazing\\dehazing\\static\\images\\dehazed_img.jpg')
+
     cv2.imwrite("D:\\SEM6\\SDP\\SDP_Django\\imagedehazing\\media\\output\\dehaze" + ".jpg", dehazed_image)
-    
+    cv2.imwrite("D:\\SEM6\\SDP\\SDP_Django\\imagedehazing\\dehazing\\static\\images\\dehazed_img" + ".jpg", dehazed_image)
     # J = ( (I - A)/t ) + A 
 
-    return render(request, 'index.html')
+    pic.name = temp
+    user.save()
+    return render(request, 'output.html')
