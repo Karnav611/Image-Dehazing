@@ -5,6 +5,7 @@ import os
 # Create your views here.
 
 def index(request):
+ 
     return render(request, 'index.html')
 
 def uploadImage(request):
@@ -160,4 +161,8 @@ def uploadImage(request):
 
     pic.name = temp
     user.save()
-    return render(request, 'output.html')
+
+    users = User.objects.all()
+    p = users[len(users)-1].img
+    print(p.url) 
+    return render(request, 'output.html', {'pic':p.url})

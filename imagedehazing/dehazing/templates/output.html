@@ -6,10 +6,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=\, initial-scale=1.0">
     <title>dehaze image</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 </head>
 <body>
-    <h2> Your dehazed image </h2>
-    <img src="{% static 'images/dehaze.jpg' %}">
-    <p>Click <a download href="{% static 'images/dehazed_img.jpg' %}">here</a> to download image</p>
+
+    <table class="center">
+        <tr>
+            <td class="mytd">
+                <img src="{{pic}}"  width="400px" height="500px">
+                <p> Original hazy image </p>
+            </td>
+            <td class="mytd">
+                <img src="{% static 'images/dehazed_img.jpg' %}" width="400px" height="500px">  
+                <p> Dehazed image </p>    
+            </td>
+        </tr>
+        <tr> <td colspan="2"> <p class="myp"> Click <a download href="{% static 'images/dehazed_img.jpg' %}"> here </a> to download your dehazed image</p> </td> </tr>
+    </table>
+    
 </body>
 </html>
